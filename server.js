@@ -7,6 +7,8 @@ var express = require('express'),
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+//nathan's header code
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -18,7 +20,7 @@ app.use(function(req, res, next) {
  * DATABASE *
  ************/
 
-// var db = require('./models');
+var db = require('./models');
 
 /**********
  * ROUTES *
@@ -32,22 +34,22 @@ app.use(express.static('public'));
  * HTML Endpoints
  */
 
+//index.html
 app.get('/', function homepage(req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
-
 
 /*
  * JSON API Endpoints
  */
 
+//GET '/api' -- document API endpoints
 app.get('/api', function api_index(req, res) {
   // TODO: Document all your api endpoints below
   res.json({
-    woops_i_has_forgot_to_document_all_my_endpoints: true, // CHANGE ME ;)
     message: "Welcome to my personal api! Here's what you need to know!",
     documentation_url: "https://github.com/example-username/express_self_api/README.md", // CHANGE ME
-    base_url: "http://YOUR-APP-NAME.herokuapp.com", // CHANGE ME
+    base_url: "https://lychee-custard-40835.herokuapp.com/",
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
       {method: "GET", path: "/api/profile", description: "Data about me"}, // CHANGE ME
@@ -55,6 +57,20 @@ app.get('/api', function api_index(req, res) {
     ]
   });
 });
+
+// GET profile  -- document personal profile
+app.get('/api/profile', function api_index(req, res) {
+  res.json({
+    message: "Hello, and thank you for your interest in my profile!",
+    name: "Morgan Allen Sharif",
+    gitHub_link: "https://github.com/morgansharif",
+    github_profile_image: "https://avatars1.githubusercontent.com/u/17555529?v=3&s=460",
+    current_city: "San Carlos",
+    pets: [{name: "Sasha Fierce", type: "Dog", breed: "Pit bull"}]
+  });
+});
+
+
 
 /**********
  * SERVER *
