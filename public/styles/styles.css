@@ -11,4 +11,38 @@ h1 {
 
 #profile-image{
   border-radius: 50%;
+  height: 150px;
+  width: 150px;
+}
+
+.image-wrapper{
+  justify-content: center;
+}
+
+#profile-target{
+  background-color: #3F5E69;
+  color: white
+}
+
+a{
+  color: white
+}
+
+.trip-holder{
+  outline-color: white;
+  outline-style: solid;
+  outline 2px;
+  padding: 20px;
+}
+
+.addDestinationForm{
+  background-color: #694A3F;
+  padding: 10px;
+  color: white
+}
+
+.dest-image{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
 }

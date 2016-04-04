@@ -113,7 +113,7 @@ app.get('/api/profile', function api_index(req, res) {
 
 //GET /api/trips -- return ALL TRIPS
 app.get('/api/trips', function (req, res){
-  console.log("GET '/api/trip' TRIGGERED");
+  console.log("GET '/api/trips' TRIGGERED");
   console.log("--req: ");
   db.Trip.find( function(err, trips){
     if (err){return console.log("error: ", err);}
@@ -124,7 +124,7 @@ app.get('/api/trips', function (req, res){
 
 //GET /api/trips:id -- find & return ONE TRIP by _id
 app.get('/api/trips/:id', function (req, res){
-  console.log("GET '/api/trip/:id' TRIGGERED");
+  console.log("GET '/api/trips/:id' TRIGGERED");
   console.log("--req: ",req.params.id);
   //search for matching _id
   db.Trip.findOne({_id: req.params.id}, function(err, trip){
@@ -137,7 +137,7 @@ app.get('/api/trips/:id', function (req, res){
 
 //POST /api/trips -- create NEW TRIP - return NEW TRIP
 app.post('/api/trips', function (req, res) {
-  console.log("POST '/api/trip' TRIGGERED");
+  console.log("POST '/api/trips' TRIGGERED");
   console.log("--req: "+req.body);
   // create new trip with form data
   var newTrip = new db.Trip({

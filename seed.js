@@ -13,7 +13,7 @@ var trips_list = [
         location: "Petra",
         duration: 1,
         activity: "Visit the silk road and see the ruins of Petra.",
-        tourism_type: "cultural",
+        tourism_type: "Cultural",
         image: "http://israelgates.com/wp-content/uploads/2015/03/Petra2.jpg"
       }]
   },
@@ -26,21 +26,21 @@ var trips_list = [
         location: "Waikiki Beach, Honolulu, Oahu",
         duration: 5,
         activity: "Hang out, be lazy, and surf at the beach in Waikiki.",
-        tourism_type: "recreational",
+        tourism_type: "Recreational",
         image: "http://www.visualitineraries.com/img/locations/19303.jpg"
       },
       {
         location: "Diamond Head, Honolulu, Oahu",
         duration: 1,
         activity: "Hike to the top of Diamond Head volcano and enjoy the view.",
-        tourism_type: "nature",
+        tourism_type: "Nature",
         image: "http://www.aloha-hawaii.com/wp-content/uploads/2009/11/diamond-head.jpg"
       },
       {
         location: "Hilo, Big Island",
         duration: 1,
         activity: "Helicopter tour of active volcanoes.",
-        tourism_type: "nature",
+        tourism_type: "Nature",
         image: "http://static.reservedirect.com/media/optimized/Blue_Hawaiian_Hilo_Helicopter_Tours_(003).jpg"
       }]
   }

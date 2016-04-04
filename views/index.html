@@ -16,6 +16,7 @@
 
     <!-- APPLICATION SCRIPTS -->
     <script src="/scripts/app.js"></script>
+
   </head>
   <body>
     <div class="container">
@@ -25,12 +26,76 @@
           <h4></h4>
         </div>
       </div>
-      
-      <div id="profileTarget" class="row">
+
+      <div id="trips-target" class="row">
+        <script id="trips-template" type="text/x-handlebars-template">
+          {{#each trips}}
+
+            <div class="row trip-holder">
+
+              <div class="row">
+                <div class="col-xs-offset-4">
+                  <button type="button" name="button" class="deleteBtn btn btn-danger pull-right" data-id={{_id}}>Delete</button>
+                    <h3>{{name}}</h3>
+                    <b>{{country}}</b><br />
+                    for <b>{{duration}}</b> days
+                </div>
+              </div>
+              <hr />
+
+              {{#each destinations}}
+              <div class="row">
+                <div class="col-xs-2">
+                  <img class="dest-image" src="{{image}}" />
+                </div>
+                <div class="col-xs-offset-1">
+                    <h4>{{location}}</h4>
+                    <b>{{tourism_type}}</b><br />
+                    for <b>{{duration}}</b> days
+                </div>
+                <div class="col-xs-offset-1">
+                  <p>{{activity}}</p>
+                </div>
+              </div>
+              {{/each}}
+
+              <!-- add destination form (at bottom of destination list) -->
+              <div class=row>
+                <form class="form-inline addDestinationForm" data-id={{_id}}>
+                  <div class="form-group">
+                    <em>Add a destination to this trip:</em><br />
+                      <input type="text" class="form-control" name="location" placeholder="Location">
+                      <input type="text" class="form-control" name="duration" placeholder="Duration(days)">
+                      Tourism Type:
+                      <select class="form-control" name="tourism_type">
+                        <option value="Recreational">Recreational</option>
+                        <option value="Cultural">Cultural</option>
+                        <option value="Nature">Nature</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Religious">Religous</option>
+                        <option value="Adventure">Adventure</option>
+                      </select>
+                      <input type="text" class="form-control" name="image" placeholder="image link">
+                    </div>
+                    <button type="submit" class="btn btn-default">Add Destination</button>
+                </form>
+              </div>
+
+            </div>
+            <!-- end individual trip row -->
+          {{/each}}
+        </script>
+      </div>
+
+
+      <div id="profile-target" class="row">
         <script id="profile-template" type="text/x-handlebars-template">
-        <img id="profile-image" src="{{github_profile_image}}">
-        <h3>{{name}}</h3>
-        <h4><a href="/api">View My Api</a></h4>
+        <div class="col-xs-2 col-xs-offset-1 img-wrapper"><img id="profile-image" src="{{github_profile_image}}"></div>
+        <div class="col-xs-4 col-xs-offset-1">
+          <h3>{{name}}</h3><br />
+          <p><a href="{{github_link}}">GitHub Link</a></p>
+          <p><a href="/api">View My Api</a></p>
+        </div>
         </script>
       </div>
     </div>
