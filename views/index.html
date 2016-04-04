@@ -22,7 +22,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
-          <h1>Dream Vacations</h1>
+          <h1>Vacation Wish-List</h1>
           <h4></h4>
         </div>
       </div>
@@ -35,13 +35,24 @@
 
               <div class="row">
                 <div class="col-xs-offset-4">
-                  <button type="button" name="button" class="deleteBtn btn btn-danger pull-right" data-id={{_id}}>Delete</button>
                     <h3>{{name}}</h3>
                     <b>{{country}}</b><br />
                     for <b>{{duration}}</b> days
                 </div>
-              </div>
-              <hr />
+                <div class="col-xs-offset-1">
+
+                  <form class="form-inline updateTripForm" data-id={{_id}}>
+                    <div class="form-group">
+                      <em>Update this trip:</em><br />
+                        <input type="text" class="form-control" name="name" placeholder="name">
+                        <input type="text" class="form-control" name="country" placeholder="country">
+                        <input type="text" class="form-control" name="duration" placeholder="Duration(days)">
+                        <button type="button" name="button" class="deleteBtn btn btn-danger pull-right" data-id={{_id}}>Delete</button>
+                        <button type="submit" name="button" class="updateBtn btn btn-primary pull-right" data-id={{_id}}>Update</button>
+                    </div>
+                  </form>
+                </div>
+                <hr />
 
               {{#each destinations}}
               <div class="row">
@@ -77,7 +88,7 @@
                       </select>
                       <input type="text" class="form-control" name="image" placeholder="image link">
                     </div>
-                    <button type="submit" class="btn btn-default">Add Destination</button>
+                    <button id="add-dest" type="submit" class="btn btn-default">Add Destination</button>
                 </form>
               </div>
 

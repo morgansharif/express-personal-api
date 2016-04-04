@@ -55,7 +55,8 @@ app.get('/api', function api_index(req, res) {
       {method: "GET",  path: "/api/trips",     description: "Get all trip data"}, //WORKING
       {method: "GET",  path: "/api/trips/:id", description: "Get one trip by Trip._id"}, //WORKING
       {method: "POST", path: "/api/trips",     description: "Create a new trip"}, //WORKING
-      {method: "POST", path: "/api/trips/:trip_id/destinations",     description: "Create a new destination within a given trip"}, //testing
+      {method: "POST", path: "/api/trips/:trip_id/destinations",     description: "Create a new destination within a given trip"}, //WORKING
+      {method: "PUT",  path: "/api/trips/:id",    description: "Update trip information by Trip._id"}, //testing
       {method: "DELETE",  path: "/api/trips/:id", description: "Delete trip by Trip._id"}, //WORKING
     ],
     about_trip_data: {
@@ -171,6 +172,41 @@ app.post('/api/trips/:trip_id/destinations', function (req, res){
   });
 });
 
+//PUT /api/trips:id -- update & return TRIP by _id
+app.put('/api/trips/:id', function (req, res){
+  console.log("PUT '/api/trips/:id' TRIGGERED");
+  console.log("--req: ",req.params.id);
+  console.log(req.body);
+  newTrip = req.body;
+  //   name: String,
+    // country: String,
+    // duration: Number,
+  //search for matching _id
+  db.Trip.findOne({_id: req.params.id}, function(err, trip){
+    if (err){return console.log("error: ", err);}
+    console.log("found matching trip: ", trip);
+    if(req.body.name){trip.name = newTrip.name;}
+    if(req.body.country){trip.country = newTrip.country;}
+    if(req.body.duration){trip.duration = parseInt(newTrip.duration);}
+    trip.save();
+    console.log("--res: ",trip);
+    res.json(trip);
+  });
+});
+
+
+//DELETE /api/trips:id -- find & DELETE ONE TRIP by _id
+app.delete('/api/trips/:id', function (req, res){
+  console.log("DELETE '/api/trips/:id' TRIGGERED");
+  console.log("--req: ",req.params.id);
+  //search for matching _id
+  db.Trip.findOneAndRemove({_id: req.params.id}, function(err, trip){
+    if (err){return console.log("error: ", err);}
+    console.log("found & deleted matching trip: ", trip);
+    console.log("--res: ",trip);
+    res.json(trip);
+  });
+});
 
 
 /**********
