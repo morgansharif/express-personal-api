@@ -15,7 +15,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-
 /************
  * DATABASE *
  ************/
@@ -51,10 +50,13 @@ app.get('/api', function api_index(req, res) {
     documentation_url: "https://github.com/morgansharif/express-personal-api/blob/master/README.md",
     base_url: "https://lychee-custard-40835.herokuapp.com/",
     endpoints: [
-      {method: "GET",  path: "/api",         description: "Describes all available endpoints (NOTE: If you are reading this, you are on this endpoint.)"},
-      {method: "GET",  path: "/api/profile", description: "Data about me"}, // CHANGE ME
-      {method: "GET",  path: "/api/trips",   description: "Get all trip data"},
-      {method: "POST", path: "/api/trips",   description: "E.g. Create a new trip"} // CHANGE ME
+      {method: "GET",  path: "/api",           description: "Describes all available endpoints (NOTE: If you are reading this, you are on this endpoint.)"}, //WORKING
+      {method: "GET",  path: "/api/profile",   description: "Data about me"}, // WORKING
+      {method: "GET",  path: "/api/trips",     description: "Get all trip data"}, //WORKING
+      {method: "GET",  path: "/api/trips/:id", description: "Get one trip by Trip._id"}, //WORKING
+      {method: "POST", path: "/api/trips",     description: "Create a new trip"}, //WORKING
+      {method: "POST", path: "/api/trips/:trip_id/destinations",     description: "Create a new destination within a given trip"}, //testing
+      {method: "DELETE",  path: "/api/trips/:id", description: "Delete trip by Trip._id"}, //WORKING
     ],
     about_trip_data: {
       name: "String - unique name for the trip",
@@ -97,7 +99,7 @@ app.get('/api', function api_index(req, res) {
   });
 });
 
-// GET profile  -- document personal profile
+// GET /api/profile  -- document personal profile
 app.get('/api/profile', function api_index(req, res) {
   res.json({
     message: "Hello, and thank you for your interest in my profile!",
@@ -109,13 +111,67 @@ app.get('/api/profile', function api_index(req, res) {
   });
 });
 
+//GET /api/trips -- return ALL TRIPS
 app.get('/api/trips', function (req, res){
   console.log("GET '/api/trip' TRIGGERED");
-  db.Trip.find(function(err, trips){
+  console.log("--req: ");
+  db.Trip.find( function(err, trips){
     if (err){return console.log("error: ", err);}
+    console.log("--res: returned " + trips.length + " trips");
     res.json(trips);
   });
 });
+
+//GET /api/trips:id -- find & return ONE TRIP by _id
+app.get('/api/trips/:id', function (req, res){
+  console.log("GET '/api/trip/:id' TRIGGERED");
+  console.log("--req: ",req.params.id);
+  //search for matching _id
+  db.Trip.findOne({_id: req.params.id}, function(err, trip){
+    if (err){return console.log("error: ", err);}
+    console.log("found matching trip: ", trip);
+    console.log("--res: ",trip);
+    res.json(trip);
+  });
+});
+
+//POST /api/trips -- create NEW TRIP - return NEW TRIP
+app.post('/api/trips', function (req, res) {
+  console.log("POST '/api/trip' TRIGGERED");
+  console.log("--req: "+req.body);
+  // create new trip with form data
+  var newTrip = new db.Trip({
+    name: req.body.name,
+    country: req.body.country,
+    duration: parseInt(req.body.duration)
+  });
+  // SAVE new trip to db
+  newTrip.save(function(err, trip){
+    if (err) {return console.log("save error: " + err);}
+    console.log("--res: " + trip.name);
+    res.json(trip);
+  });
+});
+
+//POST /api/trips:id -- find & return ONE TRIP by _id
+app.post('/api/trips/:trip_id/destinations', function (req, res){
+  console.log("POST '/api/trip/:trip_id/destinations' TRIGGERED");
+  console.log("--req: ",req.params.trip_id);
+  //search for matching _id
+  db.Trip.findOne({_id: req.params.trip_id}, function(err, trip){
+    if (err){return console.log("error: ", err);}
+    console.log("--found matching trip: ", trip.name);
+    //push destination data into trip's array
+    console.log("--destinations: ", trip.destinations);
+    trip.destinations.push(req.body);
+    // save to db
+    trip.save();
+    console.log("--res: ",trip);
+    res.json(trip);
+  });
+});
+
+
 
 /**********
  * SERVER *
