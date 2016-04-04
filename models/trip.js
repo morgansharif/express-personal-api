@@ -2,17 +2,18 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var DestinationSchema = new Schema({
-  location: String,
+  location: String, //city/monument/etc
   duration: Number, //number of days
-  activity: String,
+  activity: String, //brief description of the activity
   tourism_type: String, //from list of: recreational, cultural, nature, sports, religious, adventure"
-  image: String
+  image: String, //related image to the activity/destination,
 });
 
 var TripSchema = new Schema({
-     country: String,
-     trip_length: Number,
-     destinations: [DestinationSchema]
+  name: String,
+  country: String,
+  duration: Number,
+  destinations: [DestinationSchema]
 });
 
 var Trip = mongoose.model('Trip', TripSchema);
